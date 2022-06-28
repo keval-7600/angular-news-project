@@ -105,5 +105,7 @@
       }
     }
   },
-  "defaultProject": "news"
+  "cli": {
+    "analytics": false
+  }
 }

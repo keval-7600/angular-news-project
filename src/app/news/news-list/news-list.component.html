@@ -1,18 +1,27 @@
 <div class="container">
-  <div class="card my-4">
-    <div class="card-header">
+  <div class="card my-4" style="background-color: #383e57;">
+    <div class="card-header text-primary">
       Search filter
     </div>
     <div class="card-body">
       <div class="row">
         <div class="col-6">
-          <input type="text" class="form-control" placeholder="Country">
+          <ng-select [items]="countries" 
+           bindLabel="text"
+           placeholder="Country"
+           [(ngModel)]="selCountry"
+           bindValue="value">
+          </ng-select>
         </div>
         <div class="col-6">
-          <input type="text" class="form-control" placeholder="Category">
+          <ng-select 
+           placeholder="Category"
+           [(ngModel)]="selCategory">
+           <ng-option *ngFor="let item of categoryList" [value]="item">{{item | titlecase}}</ng-option>
+          </ng-select>
         </div>
       </div>
-      <button class="btn btn-sm btn-primary float-end mt-2">Search</button>
+      <button class="btn btn-sm btn-primary float-end mt-2" (click)="search()">Search</button>
     </div>
   </div>
   
@@ -40,7 +49,7 @@
             <div class="float-end">
               <a [href]="item.url" target="_blank" class="btn btn-sm btn-dark">Read more</a>
             </div>
-            </div>
+          </div>
       </div>
     </div>
   </div>
@@ -49,6 +58,7 @@
     <ngb-pagination
       [collectionSize]="collectionSize" 
       [(page)]="page"
+      [pageSize]="pageSize"
       (pageChange)="onPaginationChange($event)"
     >
     </ngb-pagination>

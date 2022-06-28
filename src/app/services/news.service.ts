@@ -14,7 +14,7 @@ export class NewsService {
   ) { }
 
   getNews(page: any, pageSize: any, country='in', category = '') {
-    return this.http.get(this.url + `&country=${country}&page=${page}&pageSize=${pageSize}`).pipe(map(res=>{
+    return this.http.get(this.url + `&country=${country.toLowerCase()}&category=${category.toLowerCase()}&page=${page}&pageSize=${pageSize}`).pipe(map(res=>{
       return res;
     }))
   }
