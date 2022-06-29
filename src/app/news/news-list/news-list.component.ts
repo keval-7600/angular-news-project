@@ -94,6 +94,7 @@ categoryList = [
         this.page = parseInt(params.get('page'));
         this.getNewsItems();
       } else {
+        this.page = 1;
         this.getNewsItems();
       }
     })
@@ -114,7 +115,7 @@ categoryList = [
   }
 
   search() {
-    this.getNewsItems();
+    this.router.navigate(['/']);
   }
 
   transformDesc(desc: string) {
