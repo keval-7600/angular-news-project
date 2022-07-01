@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NewsService } from 'src/app/services/news.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-news-list',
@@ -9,12 +10,12 @@ import { NewsService } from 'src/app/services/news.service';
 })
 export class NewsListComponent implements OnInit {
 
-  newsList: any;
+  newsList: any[] = [{}];
   page = 1;
   pageSize = 12;
   collectionSize: any;
   isLoading: boolean = false;
-  selCountry: any;
+  selCountry: any = 'IN';
   selCategory: any;
   countries = [
     { "text": "Argentina", "value": "AR" },
@@ -70,9 +71,9 @@ export class NewsListComponent implements OnInit {
     { "text": "United Kingdom", "value": "GB" },
     { "text": "United States", "value": "US" },
     { "text": "Venezuela", "value": "VE" },
-];
+  ];
 
-categoryList = [
+  categoryList = [
   'business',
   'entertainment',
   'general',
@@ -80,12 +81,13 @@ categoryList = [
   'science',
   'sports',
   'technology'
-];
+  ];
 
   constructor(
     private newsService: NewsService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -95,7 +97,8 @@ categoryList = [
         this.getNewsItems();
       } else {
         this.page = 1;
-        this.getNewsItems();
+        this.router.navigate(['/news'], {queryParams: {'page': this.page}})
+        // this.getNewsItems();
       }
     })
   }
@@ -103,10 +106,14 @@ categoryList = [
   getNewsItems() {
     this.isLoading = true;
     this.newsService.getNews(this.page, this.pageSize, this.selCountry, this.selCategory).subscribe((res: any) => {
-      console.log(res);
       this.newsList = res.articles;
+      console.log(res);
       this.collectionSize = res.totalResults;
       this.isLoading = false;
+    }, (error: any) => {
+      this.toastr.error(error.error.message, error.status);
+      this.isLoading = false;
+      console.log(error);
     })
   }
 
@@ -115,7 +122,9 @@ categoryList = [
   }
 
   search() {
-    this.router.navigate(['/']);
+    if(this.selCategory || this.selCountry){
+      this.router.navigate(['/']);
+    }
   }
 
   transformDesc(desc: string) {

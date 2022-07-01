@@ -20,8 +20,11 @@
     "module": "es2020",
     "lib": [
       "es2020",
-      "dom"
-    ]
+      "dom",
+    ],
+    "paths": {
+      "@NewsList/*": ["src/app/news/news-list/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
