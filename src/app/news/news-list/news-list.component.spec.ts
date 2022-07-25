@@ -2,8 +2,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NewsListComponent } from './news-list.component';
+import { RouterTestingModule } from '@angular/router/testing'; 
+import { ToastrModule } from 'ngx-toastr';
 
 describe('NewsListComponent', () => {
   let component: NewsListComponent;
@@ -11,6 +13,14 @@ describe('NewsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        ToastrModule.forRoot({
+          positionClass: 'bottom-right',
+          closeButton: true
+        })
+      ],
       declarations: [ NewsListComponent ]
     })
     .compileComponents();

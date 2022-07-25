@@ -9,6 +9,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';    
 import { ToastrModule } from 'ngx-toastr';
+import {APP_BASE_HREF} from '@angular/common';
 
 const routes: Routes = [
   {path: '', redirectTo: '/news', pathMatch: 'full'},
@@ -32,7 +33,7 @@ const routes: Routes = [
       closeButton: true
     })
   ],
-  providers: [],
+  providers: [{provide: APP_BASE_HREF, useValue: '/news'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

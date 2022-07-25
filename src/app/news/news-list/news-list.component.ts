@@ -98,7 +98,6 @@ export class NewsListComponent implements OnInit {
       } else {
         this.page = 1;
         this.router.navigate(['/news'], {queryParams: {'page': this.page}})
-        // this.getNewsItems();
       }
     })
   }
@@ -107,13 +106,11 @@ export class NewsListComponent implements OnInit {
     this.isLoading = true;
     this.newsService.getNews(this.page, this.pageSize, this.selCountry, this.selCategory).subscribe((res: any) => {
       this.newsList = res.articles;
-      console.log(res);
       this.collectionSize = res.totalResults;
       this.isLoading = false;
     }, (error: any) => {
       this.toastr.error(error.error.message, error.status);
       this.isLoading = false;
-      console.log(error);
     })
   }
 
